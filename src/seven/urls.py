@@ -23,5 +23,7 @@ urlpatterns = [
 	url(r'^$', 'profiles.views.home', name='home'),
 	url(r'^contact/$', 'contact.views.home', name='contact'),
 	url(r'^about/$', 'profiles.views.about',name='about'),
-  url(r'^admin/', include(admin.site.urls)),
+    url(r'^profile/$', 'profiles.views.user_profile',name='profile'),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/', include('allauth.urls')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

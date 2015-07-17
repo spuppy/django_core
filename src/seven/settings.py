@@ -39,9 +39,44 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'profiles',
     'crispy_forms',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 )
 
+SITE_ID = 1
+
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+LOGIN_URL='/accounts/login/'
+LOGIN_REDIRECT_URL='/'
+
+ACCOUNT_AUTHENTICATION_METHOD="username_email"
+ACCOUNT_CONFIRM_EMAIL_ON_GET=False
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL=LOGIN_URL
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL=LOGIN_REDIRECT_URL
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRED_DAYS=10
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_EMAIL_VERIFICATION=None
+ACCOUNT_EMAIL_SUBJECT_PREFIX="Subject is: "
+ACCOUNT_DEFAULT_HTTP_PROTOCOL="http"
+ACCOUNT_LOGOUT_ON_GET=True
+ACCOUNT_LOGOUT_REDIRECT_URL=LOGIN_URL
+ACCOUNT_SIGNUP_FORM_CLASS=None
+ACCOUNT_SIGNUP_PASSWORD_VERIFICATION=True
+ACCOUNT_UNIQUE_EMAIL=True
+ACCOUNT_USER_MODEL_USERNAME_FIELD="username"
+ACCOUNT_USER_MODEL_EMAIL_FIELD="email"
+
+ACCOUNT_USERNAME_MIN_LENGTH=4
+ACCOUNT_USERNAME_BLACKLIST = ['someuser']
+ACCOUNT_USERNAME_REQUIRED=True
+ACCOUNT_PASSWORD_INPUT_RENDER_VALUE=False
+ACCOUNT_USERNAME_MIN_LENGTH=6
+ACCOUNT_LOGIN_ON_EMAIL_COMFIRMATION=True
+
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,12 +102,25 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'allauth.account.context_processors.account',
+                'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'seven.wsgi.application'
+
+
+AUTHENTICATION_BACKENDS = (
+ 
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+ 
+)
 
 
 # Database
